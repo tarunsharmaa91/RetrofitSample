@@ -75,8 +75,8 @@ dependencies {
     // or, for Android:
     //api 'com.google.guava:guava:28.0-android'
     //Lombok
-    /*implementation 'org.projectlombok:lombok:1.18.8'
-    annotationProcessor 'org.projectlombok:lombok:1.18.8'*/
+    implementation 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
     //Image Compress
     //implementation 'id.zelory:compressor:2.1.0'
 
