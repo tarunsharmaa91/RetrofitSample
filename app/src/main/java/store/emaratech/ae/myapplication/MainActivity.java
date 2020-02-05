@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,8 +47,26 @@ public class MainActivity extends AppCompatActivity {
         //getCommentsWithMultipleQuery();
 
         //Above thing we can achieve using QueryMap as well
-        getCommentsWithMultipleQueryUsingQueryMap();
+        //getCommentsWithMultipleQueryUsingQueryMap();
+
+
+        // POST METHOD
+
+        //Normal post method
+        //createPost();
+
+        //Post Using Url Encoded
+        //createPostUsingUrlEncoded();
+
+        //Post Using Url Encoded
+        //createPostUsingUrlEncodedMix();
+
+        //Put Method
+        updateDataUsingPut();
+
     }
+
+
 
     private void getCommentsWithMultipleQueryUsingQueryMap() {
         Map<String, String> hashMap = new HashMap<>();
@@ -200,5 +219,102 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Fail" , Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void createPost() {
+
+        Posts post = new Posts(1, null, "titleName", "textToDisplay");
+        Call<Posts> call = jsonPlaceHolder.createPost(post);
+        call.enqueue(new Callback<Posts>() {
+            @Override
+            public void onResponse(Call<Posts> call, Response<Posts> response) {
+
+                if(!response.isSuccessful())
+                {
+                    return;
+                }
+                Posts res = response.body();
+                Toast.makeText(MainActivity.this, String.valueOf(res), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Posts> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Fail" , Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void createPostUsingUrlEncoded() {
+
+        Call<Posts> call = jsonPlaceHolder.createPostUsingForm(1,  "titleName", "textToDisplay");
+        call.enqueue(new Callback<Posts>() {
+            @Override
+            public void onResponse(Call<Posts> call, Response<Posts> response) {
+
+                if(!response.isSuccessful())
+                {
+                    return;
+                }
+                Posts res = response.body();
+                Toast.makeText(MainActivity.this, String.valueOf(res), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Posts> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Fail" , Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void createPostUsingUrlEncodedMix() {
+
+        // This is just for representation that this way we can pass data as well and  its result will be fail
+
+        Map<String, String> map = new HashMap<>();
+        map.put("id","1");
+
+        List<String> list = new ArrayList<>();
+        list.add("value");
+
+        Call<Posts> call = jsonPlaceHolder.createPostUsingFormMap(map, list, 1);
+        call.enqueue(new Callback<Posts>() {
+            @Override
+            public void onResponse(Call<Posts> call, Response<Posts> response) {
+
+                if(!response.isSuccessful())
+                {
+                    return;
+                }
+                Posts res = response.body();
+                Toast.makeText(MainActivity.this, String.valueOf(res), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Posts> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Fail" , Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void updateDataUsingPut() {
+        Posts post = new Posts(1, null, "titleName", "textToDisplay");
+        Call<Posts> call = jsonPlaceHolder.updatePostData(1,post);
+        call.enqueue(new Callback<Posts>() {
+            @Override
+            public void onResponse(@NotNull Call<Posts> call, @NotNull Response<Posts> response) {
+                if(!response.isSuccessful())
+                {
+                    return;
+                }
+                Posts res = response.body();
+                Toast.makeText(MainActivity.this, String.valueOf(res), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Posts> call, @NotNull Throwable t) {
+                Toast.makeText(MainActivity.this, "Fail" , Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 }
