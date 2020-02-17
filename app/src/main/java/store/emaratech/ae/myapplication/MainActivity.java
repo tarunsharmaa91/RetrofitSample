@@ -62,11 +62,15 @@ public class MainActivity extends AppCompatActivity {
         //createPostUsingUrlEncodedMix();
 
         //Put Method
-        updateDataUsingPut();
+        //updateDataUsingPut();
+
+        //Put Method
+        //updateDataUsingPatch();
+
+        //Delete data
+        deleteData();
 
     }
-
-
 
     private void getCommentsWithMultipleQueryUsingQueryMap() {
         Map<String, String> hashMap = new HashMap<>();
@@ -313,6 +317,44 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NotNull Call<Posts> call, @NotNull Throwable t) {
                 Toast.makeText(MainActivity.this, "Fail" , Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    private void updateDataUsingPatch() {
+        Posts post = new Posts(1, null, "titleNameAfterPatch", "textToDisplay");
+        Call<Posts> call = jsonPlaceHolder.updatePostDataPatch(1,post);
+        call.enqueue(new Callback<Posts>() {
+            @Override
+            public void onResponse(@NotNull Call<Posts> call, @NotNull Response<Posts> response) {
+                if(!response.isSuccessful())
+                {
+                    return;
+                }
+                Posts res = response.body();
+                Toast.makeText(MainActivity.this, String.valueOf(res), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Posts> call, @NotNull Throwable t) {
+                Toast.makeText(MainActivity.this, "Fail" , Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    private void deleteData() {
+        Call<Void> call = jsonPlaceHolder.deleteData(1);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
+                Toast.makeText(MainActivity.this, String.valueOf(response.code()), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Void> call, @NotNull Throwable t) {
+                Toast.makeText(MainActivity.this, "Fail", Toast.LENGTH_LONG).show();
             }
         });
 
