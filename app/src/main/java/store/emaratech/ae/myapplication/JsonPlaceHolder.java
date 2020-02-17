@@ -1,14 +1,18 @@
 package store.emaratech.ae.myapplication;
 
+import androidx.room.Delete;
+
 import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -75,9 +79,21 @@ public interface JsonPlaceHolder {
       @Path("id") int ID
     );
 
+    //Put update/overwrite entire resource
     @PUT("posts/{id}")
     Call<Posts> updatePostData(
             @Path("id") int ID, @Body Posts post
+    );
+
+    //Patch can replace only particular field which we would like to update/ used for partial update of resource
+    @PATCH("posts/{id}")
+    Call<Posts> updatePostDataPatch(
+            @Path("id") int ID, @Body Posts post
+    );
+
+    @DELETE("posts/{id}")
+    Call<Void> deleteData(
+            @Path("id") int ID
     );
 
 }
